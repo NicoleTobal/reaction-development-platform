@@ -39,10 +39,8 @@ services:
 
   postgres:
     image: postgres:10.3
-    environment:
-      - POSTGRES_USER=hydra
-      - POSTGRES_PASSWORD=changeme
-      - POSTGRES_DB=hydra
+    env_file:
+      - ./.env
     networks:
       default:
       reaction:
@@ -69,13 +67,15 @@ services:
   mongo:
     image: mongo:4.2.0
     command: mongod --oplogSize 128 --replSet rs0 --storageEngine=wiredTiger
+    env_file:
+      - ./.env
     networks:
       default:
       reaction:
     ports:
       - "27017:27017"
     volumes:
-      - mongo-db4:/data/db
+      - mongo-db:/data/db
 
   identity:
     build:
