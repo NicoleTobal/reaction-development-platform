@@ -106,4 +106,4 @@ services:
 
 volumes:
   postgres-data:
-  mongo-db4:
+  mongo-db:
