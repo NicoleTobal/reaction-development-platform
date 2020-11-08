@@ -15,7 +15,7 @@ services:
     networks:
       default:
       reaction:
-    env_file: "./reaction-hydra/.env"
+    env_file: "./reaction-hydra/.env.example"
     restart: on-failure
 
   hydra:
@@ -34,13 +34,13 @@ services:
       - "4445:4445"
       # Port for hydra token user
       - "5555:5555"
-    env_file: "./reaction-hydra/.env"
+    env_file: "./reaction-hydra/.env.example"
     restart: unless-stopped
 
   postgres:
     image: postgres:10.3
     env_file:
-      - ./.env
+      - ./.env.example
     networks:
       default:
       reaction:
@@ -57,7 +57,7 @@ services:
       - identity
     image: reaction-api
     env_file:
-      - ./reaction/.env
+      - ./reaction/.env.example
     networks:
       default:
       reaction:
@@ -72,7 +72,7 @@ services:
       - hydra
     image: reaction-identity
     env_file:
-      - ./reaction-identity/.env
+      - ./reaction-identity/.env.example
     networks:
       default:
       reaction:
@@ -87,7 +87,7 @@ services:
       - identity
     image: reaction-admin
     env_file:
-      - ./reaction-admin/.env
+      - ./reaction-admin/.env.example
     networks:
       default:
       reaction:
