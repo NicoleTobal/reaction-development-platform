@@ -11,29 +11,13 @@ According to Reaction's official documentation 2GB is needed for running all con
 
 ## Mounting all services in localhost
 
-1. Run a mongo instance:
-
-```
-docker-compose -f docker-compose-mongo.example.yml up -d
-docker exec -it reaction-development-platform_mongo_1 bash
-mongo --username root --password example
-rs.initiate();
-db.createUser(
-  {
-    user: "root",
-    pwd: "example",
-    roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
-  }
-);
-```
-
-2. Build the images for reaction-admin, reaction-identity and api:
+1. Build the images for reaction-admin, reaction-identity and api:
 
 ```
 docker-compose -f docker-compose.example.yml build
 ```
 
-3. Run docker containers for hydra and reaction images built:
+2. Run docker containers for hydra and reaction images built:
 
 ```
 docker-compose -f docker-compose.example.yml up -d

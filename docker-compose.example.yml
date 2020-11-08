@@ -55,6 +55,7 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - identity
+      - mongo
     image: reaction-api
     env_file:
       - ./reaction/.env.example
@@ -70,6 +71,7 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - hydra
+      - mongo
     image: reaction-identity
     env_file:
       - ./reaction-identity/.env.example
@@ -85,6 +87,7 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - identity
+      - mongo
     image: reaction-admin
     env_file:
       - ./reaction-admin/.env.example
@@ -95,5 +98,17 @@ services:
       - "4080:4080"
       - "9231:9229"
 
+  mongo:
+    image: mongo:4.2.0
+    command: mongod --oplogSize 128 --replSet rs0 --storageEngine=wiredTiger
+    networks:
+      default:
+      reaction:
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-db:/data/db
+
 volumes:
   postgres-data:
+  mongo-db:
