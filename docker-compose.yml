@@ -37,17 +37,17 @@ services:
     env_file: "./reaction-hydra/.env"
     restart: unless-stopped
 
-  postgres:
-    image: postgres:10.3
-    env_file:
-      - ./.env
-    networks:
-      default:
-      reaction:
-    ports:
-      - 5432
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
+  # postgres:
+  #   image: postgres:10.3
+  #   env_file:
+  #     - ./.env
+  #   networks:
+  #     default:
+  #     reaction:
+  #   ports:
+  #     - 5432
+  #   volumes:
+  #     - postgres-data:/var/lib/postgresql/data
 
   api:
     build:
@@ -64,18 +64,18 @@ services:
     ports:
       - "3000:3000"
 
-  mongo:
-    image: mongo:4.2.0
-    command: mongod --oplogSize 128 --replSet rs0 --storageEngine=wiredTiger
-    env_file:
-      - ./.env
-    networks:
-      default:
-      reaction:
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo-db:/data/db
+  # mongo:
+  #   image: mongo:4.2.0
+  #   command: mongod --oplogSize 128 --replSet rs0 --storageEngine=wiredTiger
+  #   env_file:
+  #     - ./.env
+  #   networks:
+  #     default:
+  #     reaction:
+  #   ports:
+  #     - "27017:27017"
+  #   volumes:
+  #     - mongo-db:/data/db
 
   identity:
     build:
@@ -104,6 +104,6 @@ services:
       - "4080:4080"
       - "9231:9229"
 
-volumes:
-  postgres-data:
-  mongo-db:
+# volumes:
+#   postgres-data:
+#   mongo-db:
