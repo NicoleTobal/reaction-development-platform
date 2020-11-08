@@ -10,6 +10,8 @@ services:
   hydra-migrate:
     image: oryd/hydra:v1.0.8
     command: migrate sql -e -y
+    depends_on:
+      - postgres
     networks:
       default:
       reaction:
@@ -20,6 +22,7 @@ services:
     image: oryd/hydra:v1.0.8
     command: serve all --dangerous-force-http
     depends_on:
+      - postgres
       - hydra-migrate
     networks:
       default:
@@ -34,17 +37,17 @@ services:
     env_file: "./reaction-hydra/.env"
     restart: unless-stopped
 
-  # postgres:
-  #   image: postgres:10.3
-  #   env_file:
-  #     - ./.env
-  #   networks:
-  #     default:
-  #     reaction:
-  #   ports:
-  #     - 5432
-  #   volumes:
-  #     - postgres-data:/var/lib/postgresql/data
+  postgres:
+    image: postgres:10.3
+    env_file:
+      - ./.env
+    networks:
+      default:
+      reaction:
+    ports:
+      - 5432
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
 
   api:
     build:
@@ -99,6 +102,6 @@ services:
       - "4080:4080"
       - "9231:9229"
 
-# volumes:
-#   postgres-data:
+volumes:
+  postgres-data:
 #   mongo-db:
