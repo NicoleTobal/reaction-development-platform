@@ -10,8 +10,6 @@ services:
   hydra-migrate:
     image: oryd/hydra:v1.0.8
     command: migrate sql -e -y
-    depends_on:
-      - postgres
     networks:
       default:
       reaction:
@@ -23,7 +21,6 @@ services:
     command: serve all --dangerous-force-http
     depends_on:
       - hydra-migrate
-      - postgres
     networks:
       default:
       reaction:
@@ -54,8 +51,6 @@ services:
       context: ./reaction
       dockerfile: Dockerfile
     image: reaction-api
-    depends_on:
-      - mongo
     env_file:
       - ./reaction/.env
     networks:
